@@ -5,14 +5,16 @@ import rhino3dm from 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm
 import { RhinoCompute } from 'https://cdn.jsdelivr.net/npm/compute-rhino3d@0.13.0-beta/compute.rhino3d.module.js'
 
 // reference the definition
-const definitionName = 'cloud_.gh'
+const definitionName = 'Shell_Generation_Kangaroo_SK.gh'
 
 // listen for slider change events
-const count_slider = document.getElementById( 'count' )
-count_slider.addEventListener( 'input', onSliderChange, false )
-const radius_slider = document.getElementById( 'radius' )
-radius_slider.addEventListener( 'input', onSliderChange, false )
 
+const chamfer_slider = document.getElementById( 'chamfer' )
+chamfer_slider.addEventListener( 'input', onSliderChange, false )
+const segments_slider = document.getElementById( 'mesh_subdivision' )
+segments_slider.addEventListener( 'input', onSliderChange, false )
+const count_slider = document.getElementById( 'vault_height' )
+count_slider.addEventListener( 'input', onSliderChange, false )
 const downloadButton = document.getElementById("downloadButton")
 downloadButton.onclick = download
 
@@ -49,19 +51,22 @@ async function compute() {
     // collect data
 
     // get slider values
-    let count = document.getElementById('count').valueAsNumber
-    let radius = document.getElementById('radius').valueAsNumber
+    let chamfer = document.getElementById('chamfer').valueAsNumber
+    let mesh_subdivision = document.getElementById('mesh_subdivision').valueAsNumber
+    let vault_height = document.getElementById('vault_height').valueAsNumber
 
     // format data
-    let param1 = new RhinoCompute.Grasshopper.DataTree('RH_IN:height')
-    param1.append([0], [radius])
-    let param2 = new RhinoCompute.Grasshopper.DataTree('RH_IN:number')
-    param2.append([0], [count])
-
+    let param1 = new RhinoCompute.Grasshopper.DataTree('RH_IN:chamfer')
+    param1.append([0], [chamfer])
+    let param2 = new RhinoCompute.Grasshopper.DataTree('RH_IN:mesh_subdivision')
+    param2.append([0], [mesh_subdivision])
+    let param3 = new RhinoCompute.Grasshopper.DataTree('RH_IN:vault_height')
+    param3.append([0], [vault_height])
     // Add all params to an array
     let trees = []
     trees.push(param1)
     trees.push(param2)
+    trees.push(param3)
 
     // Call RhinoCompute
 
