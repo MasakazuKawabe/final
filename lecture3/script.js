@@ -9,8 +9,6 @@ const definitionName = 'Shell_Generation_Kangaroo_SK.gh'
 
 // listen for slider change events
 
-const chamfer_slider = document.getElementById( 'chamfer' )
-chamfer_slider.addEventListener( 'input', onSliderChange, false )
 const segments_slider = document.getElementById( 'mesh_subdivision' )
 segments_slider.addEventListener( 'input', onSliderChange, false )
 const count_slider = document.getElementById( 'vault_height' )
@@ -51,20 +49,17 @@ async function compute() {
     // collect data
 
     // get slider values
-    let chamfer = document.getElementById('chamfer').valueAsNumber
     let mesh_subdivision = document.getElementById('mesh_subdivision').valueAsNumber
     let vault_height = document.getElementById('vault_height').valueAsNumber
 
     // format data
-    let param1 = new RhinoCompute.Grasshopper.DataTree('RH_IN:chamfer')
-    param1.append([0], [chamfer])
     let param2 = new RhinoCompute.Grasshopper.DataTree('RH_IN:mesh_subdivision')
     param2.append([0], [mesh_subdivision])
     let param3 = new RhinoCompute.Grasshopper.DataTree('RH_IN:vault_height')
     param3.append([0], [vault_height])
     // Add all params to an array
     let trees = []
-    trees.push(param1)
+    //trees.push(param1)
     trees.push(param2)
     trees.push(param3)
 
@@ -170,7 +165,7 @@ function init() {
     scene = new THREE.Scene()
     scene.background = new THREE.Color(1, 1, 1)
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    camera.position.z = - 30
+    camera.position.y = - 30
 
     // create the renderer and add it to the html
     renderer = new THREE.WebGLRenderer({ antialias: true })
